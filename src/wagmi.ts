@@ -25,7 +25,7 @@ const hybridTestnet = {
 
 export const config = getDefaultConfig({
   appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: '98569b39c5394b736ce9aa22189928c5',
   chains: [
     hybridTestnet,
   ],

@@ -11,6 +11,10 @@ import {
 } from 'wagmi';
 import { contractAddress, contractABI } from '../contractconfig';
 import { formatUnits } from 'viem';
+import { toast } from 'react-toastify';
+
+import CustomErrorToast from '../errorToast';
+import annoyed from '../assets/annoyed.gif';
 
 const Home: NextPage = () => {
   const CtfContract = {
@@ -28,7 +32,7 @@ const Home: NextPage = () => {
   const {
     data: hash,
     isPending,
-    writeContract,
+    writeContractAsync,
     error: mintError
   } = useWriteContract();
 
@@ -111,26 +115,50 @@ const Home: NextPage = () => {
             </h1>
 
             <button
-            style={{ 
-              marginTop: '1rem',
-              backgroundColor: 'rgb(54, 89, 96)',
-              color: 'white',
-              height: '48px',
-              width: '248px',
-              border: '0 solid #e5e7eb'
-              
+             style={{
+              color: 'rgb(255, 255, 255)', // White text
+              backgroundColor: 'rgb(54, 89, 96)', // Teal background
+              borderRadius: '0.5rem', // Rounded corners
+              display: 'flex', // Flexbox layout
+              justifyContent: 'center', // Center content horizontally
+              alignItems: 'center', // Center content vertically
+              width: '248px', // Full width
+              height: '48px', // Fixed height
+              marginTop: '0.5rem', // Margin on top
+              border: 'none', // Remove default border
+              cursor: 'pointer', // Pointer cursor on hover
+              fontFamily: 'Area Normal, sans-serif', // Specific font family
+              fontSize: '1rem', // Medium font size
+            }}
 
-             }}
-              onClick={() =>
-                writeContract({
-                  ...CtfContract,
-                  functionName: 'steal',
+            onClick={async() =>
+              writeContractAsync({
+                ...CtfContract,
+                functionName: 'steal',
+              })
+                .then((result) => {
+                  // Check if the result indicates a success
+                  if (result) {
+                    toast.success(<CustomErrorToast
+                      message="Nice!"
+                      gifUrl='https://media1.tenor.com/m/AlrUVwjmtDQAAAAC/yikes-running.gif' // Replace with your desired GIF URL
+                    />)
+
+                  }
                 })
-              }
-              disabled={isPending}
-            >
-              {isPending ? 'Stealing...' : 'Steal'}
-            </button>
+                .catch((error) => {
+                  console.error('Steal action failed:', error);
+                        toast.error(<CustomErrorToast
+                        message=""
+                        gifUrl='https://media1.tenor.com/m/ciNDyf6AgH0AAAAd/disappointed-disappointed-fan.gif' // Replace with your desired GIF URL
+                      /> )               })
+            }
+            disabled={isPending}
+          >
+            {isPending ? 'Stealing...' : 'Steal'}
+          </button>
+          <p>{address == flagOwner?.result ? "You own the flag!" : ""} </p>
+
 
             {mintError && (
               <div className={styles.error}>
