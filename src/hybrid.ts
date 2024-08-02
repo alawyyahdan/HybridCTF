@@ -1,8 +1,8 @@
-import { getDefaultConfig, Chain } from '@rainbow-me/rainbowkit';
+import { Chain } from "viem";
 
 export const HYBRID_EXPLORER = "https://explorer.buildonhybrid.com/";
 
-const hybridTestnet = {
+export const hybridTestnet: Chain = {
   name: "Hybrid Testnet",
   testnet: true,
   nativeCurrency: {
@@ -21,13 +21,4 @@ const hybridTestnet = {
       url: HYBRID_EXPLORER,
     },
   },
-} as const satisfies Chain;
-
-export const config = getDefaultConfig({
-  appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
-  chains: [
-    hybridTestnet,
-  ],
-  ssr: true,
-});
+};
