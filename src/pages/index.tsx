@@ -134,6 +134,7 @@ const Home: NextPage = () => {
             onClick={async() =>
               writeContractAsync({
                 ...CtfContract,
+                chainId: 1225,
                 functionName: 'steal',
               })
                 .then((result) => {
