@@ -1,6 +1,9 @@
 import { getDefaultConfig, Chain } from '@rainbow-me/rainbowkit';
+import { sep } from 'path';
+import { sepolia } from 'wagmi/chains';
 
 export const HYBRID_EXPLORER = "https://explorer.buildonhybrid.com/";
+
 
 const hybridTestnet = {
   name: "Hybrid Testnet",
@@ -28,6 +31,7 @@ export const config = getDefaultConfig({
   projectId: '98569b39c5394b736ce9aa22189928c5',
   chains: [
     hybridTestnet,
+    sepolia
   ],
   ssr: true,
 });
